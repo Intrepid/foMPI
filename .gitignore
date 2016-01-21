@@ -1,5 +1,6 @@
-*.o
-*.ar
 *.a
+*.ar
+*.bak
 *.mod
+*.o
 fompi_op.c
