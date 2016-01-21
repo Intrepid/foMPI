@@ -1,0 +1,5 @@
+*.o
+*.ar
+*.a
+*.mod
+fompi_op.c
