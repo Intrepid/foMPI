@@ -5,6 +5,7 @@
 *.mod
 *.o
 *~
-.dirstamp
 .deps/
+.dirstamp
+autom4te.cache/
 fompi_op.c
