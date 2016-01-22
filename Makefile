@@ -42,7 +42,7 @@ EXE = \
 all: fompi-na.ar $(EXE)
 
 clean:
-	rm -f *.o fompi_op.c fompi-na.ar $(EXE)
+	rm -f *.o fompi.mod fompi_op.c fompi-na.ar $(EXE)
 
 recursive-clean: clean
 	make -C mpitypes clean
@@ -50,10 +50,12 @@ recursive-clean: clean
 	make -C libtopodisc clean
 
 distclean: clean 
-	rm -rf mpitypes
+	make -C mpitypes distclean
+	test -d mpitypes/install && rm -rf mpitypes/install
 	make -C libtopodisc clean
 
-# libtopodisc.a is actual not a real dependency, but is here to ensure it is build
+# libtopodisc.a is actually not a real dependency,
+# but is here to ensure it is built.
 fompi-na.ar: $(OBJS) libtopodisc/libtopodisc.a
 	ar -r fompi-na.ar $(OBJS)
 	ranlib fompi-na.ar
@@ -119,18 +121,15 @@ fompi.mod module_fompi.o: module_fompi.f90
 # target to build mpitypes with a separate compiler
 mpitypes: mpitypes/install/include/mpitypes.h mpitypes/install/lib/libmpitypes.a
 
-mpitypes/install/include/mpitypes.h mpitypes/install/lib/libmpitypes.a: mpitypes.tar.bz2
-	tar xfj mpitypes.tar.bz2
-	find mpitypes/configure.ac -type f -print0 | xargs -0 sed -i 's/mpicc/$(cc)/g'
+mpitypes/install/include/mpitypes.h mpitypes/install/lib/libmpitypes.a:
 	cd mpitypes ; \
-	./prepare ; \
 	./configure --prefix=$(CURDIR)/mpitypes/install
 	make -C mpitypes
 	make -C mpitypes install
 	cp mpitypes/mpitypes-config.h mpitypes/install/include
 	cp mpitypes/src/dataloop/dataloop_create.h mpitypes/install/include
 
-# target to build mpitypes with a separate compiler
+# target to build libtopodisc with a separate compiler
 libtopodisc: libtopodisc/libtopodisc.a
 
 libtopodisc/libtopodisc.a: libtopodisc/findcliques.c libtopodisc/findcliques.h libtopodisc/meshmap2d.c libtopodisc/libtopodisc.c
