@@ -15,7 +15,8 @@ dnl release is own choice
 dnl
 m4_define([M4_MPITYPES_RELEASE],[1])
 
-AC_INIT([mpitypes],[M4_MPITYPES_VERSION])
+AC_INIT([mpitypes],[M4_MPITYPES_VERSION],[],[],
+[http://www.mcs.anl.gov/mpitypes])
 
 AC_PREREQ(2.59)
 
@@ -52,10 +53,30 @@ else
 fi
 
 CC=cc
+
+# Checks for programs.
 AC_PROG_CC
 AM_PROG_CC_C_O
-
 AC_PROG_RANLIB
+AM_PROG_AR
+
+# Checks for libraries.
+
+# Checks for header files.
+AC_CHECK_HEADERS([limits.h stdint.h stdlib.h string.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_C_INLINE
+AC_C_RESTRICT
+AC_TYPE_INT16_T
+AC_TYPE_INT32_T
+AC_TYPE_INT64_T
+AC_TYPE_INTPTR_T
+AC_TYPE_UINTPTR_T
+
+# Checks for library functions.
+AC_FUNC_MALLOC
+AC_CHECK_FUNCS([memset])
 
 dnl
 dnl Gain confidence that the cc works.
@@ -70,9 +91,6 @@ AC_CHECK_SIZEOF([long long int])
 AC_CHECK_SIZEOF([MPI_Aint],[],[
     AC_INCLUDES_DEFAULT
     #include "mpi.h"])
-
-AC_TYPE_INTPTR_T
-AC_TYPE_UINTPTR_T
 
 # DLOOP_Offset printf format specifiers
 aint_dec_spec=""
@@ -126,9 +144,6 @@ AC_TRY_COMPILE(
    AC_MSG_RESULT(no)
 )
 
-
-AC_CHECK_HEADER(string.h)
-
 # check for __attribute__ specifier
 # adapted from PAC_C_GNU_ATTRIBUTE
 # we don't strictly require gcc
@@ -149,4 +164,3 @@ AC_CONFIG_HEADER(mpitypes-config.h)
 AC_CONFIG_FILES([Makefile mpitypes.pc])
 
 AC_OUTPUT
-
