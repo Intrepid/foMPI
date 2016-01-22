@@ -1,6 +1,7 @@
 *.a
 *.ar
 *.bak
+*.log
 *.mod
 *.o
 *~
