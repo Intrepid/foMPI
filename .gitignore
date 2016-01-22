@@ -3,4 +3,7 @@
 *.bak
 *.mod
 *.o
+*~
+.dirstamp
+.deps/
 fompi_op.c
