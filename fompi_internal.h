@@ -481,7 +481,7 @@ extern foMPI_global_t glob_info;
  @params[in] expected  return value which was expected
  */
 
-inline static void _check_dmapp_status(dmapp_return_t actual, dmapp_return_t expected, char* file,
+static inline void _check_dmapp_status(dmapp_return_t actual, dmapp_return_t expected, char* file,
 		int line) {
 
 #ifndef NDEBUG
@@ -498,7 +498,7 @@ inline static void _check_dmapp_status(dmapp_return_t actual, dmapp_return_t exp
 
 }
 
-inline static void _check_gni_status(gni_return_t actual, gni_return_t expected, char* file,
+static inline void _check_gni_status(gni_return_t actual, gni_return_t expected, char* file,
 		int line) {
 
 #ifndef NDEBUG
@@ -514,7 +514,7 @@ inline static void _check_gni_status(gni_return_t actual, gni_return_t expected,
 
 }
 
-inline static void _check_MPI_status(int actual, int expected, char* file, int line) {
+static inline void _check_MPI_status(int actual, int expected, char* file, int line) {
 
 #ifndef NDEBUG
 

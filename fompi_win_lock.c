@@ -17,7 +17,7 @@ static inline int _foMPI_Win_uGNI_flush_all(foMPI_Win win);
 /* We have to keep track of which locks are exclusive.
  * To implement it in a scalable way (without O(p) memory overhead), we use a list.
  * We insert at the head of the list */
-inline static void foMPI_insert_excl_lock(int rank, foMPI_Win win) {
+static inline void foMPI_insert_excl_lock(int rank, foMPI_Win win) {
 
 	foMPI_Win_excl_lock_elem_t* new_elem = _foMPI_ALLOC(sizeof(foMPI_Win_excl_lock_elem_t));
 	new_elem->rank = rank;
@@ -28,7 +28,7 @@ inline static void foMPI_insert_excl_lock(int rank, foMPI_Win win) {
 }
 
 /* functions assumes that we always will find the rank */
-inline static void foMPI_delete_excl_lock(int rank, foMPI_Win win) {
+static inline void foMPI_delete_excl_lock(int rank, foMPI_Win win) {
 
 	foMPI_Win_excl_lock_elem_t* previous;
 	foMPI_Win_excl_lock_elem_t* current;
@@ -55,7 +55,7 @@ inline static void foMPI_delete_excl_lock(int rank, foMPI_Win win) {
 
 }
 
-inline static int foMPI_search_excl_lock(int rank, foMPI_Win win) {
+static inline int foMPI_search_excl_lock(int rank, foMPI_Win win) {
 
 	if (win->excl_locks == NULL) /* no exclusive locks */
 		return foMPI_LOCK_SHARED;
