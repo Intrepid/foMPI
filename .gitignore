@@ -8,4 +8,7 @@
 .deps/
 .dirstamp
 autom4te.cache/
+c_test
 fompi_op.c
+fortran_test_f77
+fortran_test_f90
