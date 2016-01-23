@@ -280,7 +280,7 @@ int _foMPI_Comm_free(_foMPI_Comm *communicator) {
 /*
  * Internal Functions
  */
-inline int _foMPI_Comm_flush_all_internal(_foMPI_Comm communicator) {
+int _foMPI_Comm_flush_all_internal(_foMPI_Comm communicator) {
 #ifdef UGNI
 	/*
 	 * Check the completion queue to verify that the message request has
@@ -565,7 +565,7 @@ static inline int ugni_Dequeue_local_event(_foMPI_Comm comm) {
 }
 
 //TODO: not safe, buffer of pointers is better
-inline gni_post_descriptor_t * _foMPI_Comm_get_ugni_data_descriptor(_foMPI_Comm comm){
+gni_post_descriptor_t * _foMPI_Comm_get_ugni_data_descriptor(_foMPI_Comm comm){
 	if (comm->counter_ugni_nbi >= comm->number_of_cq_entries) {
 			//TODO: you can flush only ugni
 			_foMPI_Comm_flush_all_internal(comm);

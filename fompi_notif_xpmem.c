@@ -16,7 +16,7 @@ void printlock(fompi_xpmem_notif_queue_t *queue, lock_flags_t *flags_array){
 	printf("] \n tail: %d\n",queue->tail);
 }
 */
-inline void xpmem_notif_lock(fompi_xpmem_notif_queue_t *queue,lock_flags_t *flags_array,fompi_xpmem_notif_state_t *queue_state, int *slot, foMPI_Win win) {
+void xpmem_notif_lock(fompi_xpmem_notif_queue_t *queue,lock_flags_t *flags_array,fompi_xpmem_notif_state_t *queue_state, int *slot, foMPI_Win win) {
 	*slot = __sync_fetch_and_add(&(queue_state->tail), 1) ;
 	*slot = *slot % win->onnode_size;
 	while (!flags_array[*slot]) {
@@ -25,7 +25,7 @@ inline void xpmem_notif_lock(fompi_xpmem_notif_queue_t *queue,lock_flags_t *flag
 	//printlock(queue,flags_array);
 }
 
-inline void xpmem_notif_unlock(fompi_xpmem_notif_queue_t *queue,lock_flags_t *flags_array, int slot, foMPI_Win win) {
+void xpmem_notif_unlock(fompi_xpmem_notif_queue_t *queue,lock_flags_t *flags_array, int slot, foMPI_Win win) {
 	flags_array[slot] = 0;
 	flags_array[(slot + 1) % win->onnode_size] = 1;
 	//printf("unlock -> slot: %d ", slot);
@@ -65,7 +65,7 @@ void xpmem_notif_free_queue(foMPI_Win win) {
 	_foMPI_FREE(win->xpmem_notif_state_lock);
 }
 
-inline int xpmem_notif_push_and_data(int source_rank, MPI_Aint target_offset, size_t size, int target_rank, int target_local_rank, MPI_Aint origin_offset, int tag, foMPI_Win win){
+int xpmem_notif_push_and_data(int source_rank, MPI_Aint target_offset, size_t size, int target_rank, int target_local_rank, MPI_Aint origin_offset, int tag, foMPI_Win win){
 #ifndef NDEBUG
 	assert(size<=_foMPI_XPMEM_NOTIF_INLINE_BUFF_SIZE);
 #endif
@@ -101,7 +101,7 @@ inline int xpmem_notif_push_and_data(int source_rank, MPI_Aint target_offset, si
 		return 0;
 }
 
-inline int xpmem_notif_push( int16_t myrank, int16_t tag, int target_rank, int target_local_rank, foMPI_Win win) {
+int xpmem_notif_push( int16_t myrank, int16_t tag, int target_rank, int target_local_rank, foMPI_Win win) {
 //	int source_rank, void* source_addr, int size, int target_rank, uint64_t target_addr, int tag, foMPI_Win win){
 	//find target rank
 	int slot;
@@ -131,7 +131,7 @@ inline int xpmem_notif_push( int16_t myrank, int16_t tag, int target_rank, int t
 	return 0;
 }
 
-inline int xpmem_notif_pop(int16_t *rank, int16_t *tag, foMPI_Win win) {
+int xpmem_notif_pop(int16_t *rank, int16_t *tag, foMPI_Win win) {
 	fompi_xpmem_notif_state_t *queue_state = (fompi_xpmem_notif_state_t *) win->xpmem_notif_state_lock;
 	if (queue_state->count == 0){
 		return -1;

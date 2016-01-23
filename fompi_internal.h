@@ -533,15 +533,15 @@ static inline void _check_MPI_status(int actual, int expected, char* file, int l
 /*used in init and finalize */
 int _foMPI_Comm_create(MPI_Comm comm, _foMPI_Comm *newcomm);
 int _foMPI_Comm_free(_foMPI_Comm *communicator);
-inline gni_post_descriptor_t * _foMPI_Comm_get_ugni_data_descriptor(_foMPI_Comm comm);
+gni_post_descriptor_t * _foMPI_Comm_get_ugni_data_descriptor(_foMPI_Comm comm);
 
 /*register and unregister memory seg with nic*/
 void _foMPI_mem_register(void *addr, uint64_t size, fompi_seg_desc_t *seg, foMPI_Win win);
 void _foMPI_mem_unregister(fompi_seg_desc_t *seg, foMPI_Win win);
-inline int _foMPI_is_addr_in_seg(void * addr, fompi_seg_desc_t *seg);
+int _foMPI_is_addr_in_seg(void * addr, fompi_seg_desc_t *seg);
 
 /*flushing ugni ops*/
-inline int _foMPI_Comm_flush_all_internal(_foMPI_Comm communicator);
+int _foMPI_Comm_flush_all_internal(_foMPI_Comm communicator);
 /* used in lock and the rma calls */
 void foMPI_Release_window_mutex(dmapp_return_t* status, dmapp_pe_t target_pe,
 		foMPI_Win_desc_t* win_ptr, dmapp_seg_desc_t* win_ptr_seg, foMPI_Win win);
@@ -551,16 +551,16 @@ void foMPI_Set_window_mutex(dmapp_return_t* status, dmapp_pe_t target_pe, foMPI_
 int foMPI_RMA_op(void *buf3, void *buf1, void *buf2, foMPI_Op op, MPI_Datatype type, int count);
 
 int get_free_elem(fortran_free_mem_t **list_head);
-inline int _foMPI_EncodeID(uint16_t rank, uint16_t id_msg, uint32_t *id_encoded);
-inline int _foMPI_DecodeID(uint16_t *rank, uint16_t *id_msg, uint32_t id_encoded);
+int _foMPI_EncodeID(uint16_t rank, uint16_t id_msg, uint32_t *id_encoded);
+int _foMPI_DecodeID(uint16_t *rank, uint16_t *id_msg, uint32_t id_encoded);
 
 #ifdef XPMEM
 void xpmem_notif_init_queue(foMPI_Win win, int onnode_size);
 void xpmem_notif_free_queue(foMPI_Win win);
-inline int xpmem_notif_push(int16_t rank, int16_t tag, int target_rank, int target_local_rank, foMPI_Win win);
-inline int xpmem_notif_push_and_data(int source_rank, MPI_Aint target_offset, size_t size, int target_rank, int target_local_rank, MPI_Aint origin_offset, int tag, foMPI_Win win);
-inline int xpmem_notif_pop(int16_t *rank, int16_t *tag, foMPI_Win win);
-inline void sse_memcpy(char *to, const char *from, size_t len);
+int xpmem_notif_push(int16_t rank, int16_t tag, int target_rank, int target_local_rank, foMPI_Win win);
+int xpmem_notif_push_and_data(int source_rank, MPI_Aint target_offset, size_t size, int target_rank, int target_local_rank, MPI_Aint origin_offset, int tag, foMPI_Win win);
+int xpmem_notif_pop(int16_t *rank, int16_t *tag, foMPI_Win win);
+void sse_memcpy(char *to, const char *from, size_t len);
 
 xpmem_seg_desc_t foMPI_export_memory_xpmem(void *ptr, int len);
 void* foMPI_map_memory_xpmem(xpmem_seg_desc_t rseg, int len, xpmem_apid_t* apid, int* offset);

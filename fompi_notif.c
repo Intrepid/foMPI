@@ -291,7 +291,7 @@ static inline int _foMPI_NotificationReceived_direct(void *args_ptr, int *flag, 
 	return MPI_SUCCESS;
 }
 
-inline int _foMPI_DecodeID(uint16_t *rank, uint16_t *id_msg, uint32_t id_encoded) {
+int _foMPI_DecodeID(uint16_t *rank, uint16_t *id_msg, uint32_t id_encoded) {
 	*id_msg = id_encoded & 0xffff;
 	*rank = id_encoded >> 16;
 	return MPI_SUCCESS;

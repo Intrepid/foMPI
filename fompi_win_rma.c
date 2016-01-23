@@ -41,7 +41,7 @@ static inline int _foMPI_Rma_notify(const void *origin_addr, int origin_count,
 		MPI_Datatype origin_datatype, int target_rank, MPI_Aint target_disp, int target_count,
 		MPI_Datatype target_datatype, foMPI_Win win, int tag, int operation);
 #endif
-inline void sse_memcpy(char *to, const char *from, size_t len) {
+void sse_memcpy(char *to, const char *from, size_t len) {
 	unsigned long src = (unsigned long) from;
 	unsigned long dst = (unsigned long) to;
 	int i;
@@ -3053,7 +3053,7 @@ static inline void ugni_simple_rma(dmapp_pe_t target_pe, MPI_Aint target_offset,
 
 }
 
-inline int _foMPI_EncodeID(uint16_t rank, uint16_t id_msg, uint32_t *id_encoded) {
+int _foMPI_EncodeID(uint16_t rank, uint16_t id_msg, uint32_t *id_encoded) {
 
 	*id_encoded = (rank << 16) + id_msg;
 	return MPI_SUCCESS;

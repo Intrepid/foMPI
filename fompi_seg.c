@@ -66,7 +66,7 @@ void _foMPI_mem_unregister(fompi_seg_desc_t *seg, foMPI_Win win) {
 	_foMPI_TRACE_LOG(1, "_foMPI_mem_unregister[%p] -> success   \n", seg->addr);
 }
 
-inline int _foMPI_is_addr_in_seg(void * addr, fompi_seg_desc_t *seg ){
+int _foMPI_is_addr_in_seg(void * addr, fompi_seg_desc_t *seg ){
 	if(addr >= seg->addr && addr <= (seg->addr + seg->size)){
 		return _foMPI_TRUE;
 	}
