@@ -69,8 +69,8 @@ int foMPI_Init(int *argc, char ***argv) {
 		need_to_mpi_finalize = 0;
 	}
 
-	status = dmapp_initialized(&flag);
-	_check_dmapp_status(status, DMAPP_RC_SUCCESS, (char*) __FILE__, __LINE__);
+	// status = dmapp_initialized(&flag);
+	// _check_dmapp_status(status, DMAPP_RC_SUCCESS, (char*) __FILE__, __LINE__);
 
 	if (flag == 0) {
 		if (!need_to_mpi_finalize) {

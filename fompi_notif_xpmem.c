@@ -36,7 +36,7 @@ void xpmem_notif_unlock(fompi_xpmem_notif_queue_t *queue,lock_flags_t *flags_arr
 void xpmem_notif_init_queue(foMPI_Win win, int onnode_size) {
 	assert(win->onnode_size > 0);
 	void * tempPtr;
-	assert(sizeof(fompi_xpmem_notif_queue_t) == 64);
+	assert(sizeof(fompi_xpmem_notif_queue_t) > 64);
 	posix_memalign( ( (void**) &tempPtr ) ,_foMPI_PAGE_SIZE_IN_BYTES,  sizeof(fompi_xpmem_notif_queue_t) );
 	assert(tempPtr != NULL);
 	win->xpmem_notif_queue = (fompi_xpmem_notif_queue_t*) tempPtr;
